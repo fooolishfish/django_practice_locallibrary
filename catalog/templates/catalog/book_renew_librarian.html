@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+    <!-- book_inst的由來是views.py -->
+    <h1>Renew: {{bookinst.book.title}}</h1>
+    <p>Borrower: {{bookinst.borrower}}</p>
+    <p{% if bookinst.is_overdue %} class="text-danger"{% endif %}>Due date: {{bookinst.due_back}}</p>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            <!-- forms.py定義的欄位將會自動在下面的form變數裡面產生 -->
+        {{ form }}
+        </table>
+        <input type="submit" value="Submit" />
+    </form>
+
+    <!-- 讓畫面上的date欄位有可愛的UI可以快速選取日期 -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#id_renewal_date" ).datepicker( { dateFormat: 'yy-mm-dd' } );
+        } );
+    </script>
+
+{% endblock %}
